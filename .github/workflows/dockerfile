@@ -1,0 +1,20 @@
+# Menggunakan base image Python versi 3.9
+FROM python:3.9-slim
+
+# Menetapkan direktori kerja di dalam container
+WORKDIR /app
+
+# Menyalin file requirements.txt untuk caching layer
+COPY requirement.txt .
+
+# Menginstal semua dependensi
+RUN pip install --no-cache-dir -r requirement.txt
+
+# Menyalin seluruh kode aplikasi ke dalam container
+COPY . .
+
+# Memberi tahu Docker bahwa container akan berjalan di port 8000
+EXPOSE 8000
+
+# Perintah untuk menjalankan aplikasi saat container dimulai
+CMD ["python", "app.py"]
